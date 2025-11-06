@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Street Gang - Bewerbung</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0B0B0B;
+            --accent-red: #C91616;
+            --text-light: #FFFFFF;
+            --text-gray: #AAAAAA;
+            --glass-bg: rgba(15, 15, 15, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Nebel-Animation */
+        .smoke-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(201, 22, 22, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(201, 22, 22, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(201, 22, 22, 0.1) 0%, transparent 50%);
+            animation: smoke-move 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes smoke-move {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(-20px, -10px) scale(1.05);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid rgba(201, 22, 22, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: var(--accent-red);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(201, 22, 22, 0.5);
+            opacity: 0;
+            animation: fadeInBlur 2s ease-out 0.5s forwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeInBlur 2s ease-out 1s forwards;
+        }
+
+        .scroll-btn {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--accent-red);
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInBlur 2s ease-out 1.5s forwards;
+        }
+
+        .scroll-btn:hover {
+            background: rgba(201, 22, 22, 0.1);
+            box-shadow: 0 0 15px rgba(201, 22, 22, 0.5);
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-red);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background: var(--accent-red);
+        }
+
+        .content-box {
+            background: rgba(20, 20, 20, 0.7);
+            border: 1px solid rgba(201, 22, 22, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 10px rgba(201, 22, 22, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .content-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(201, 22, 22, 0.3);
+            border-color: rgba(201, 22, 22, 0.5);
+        }
+
+        /* Rank List Styles */
+        .rank-list {
+            list-style-type: none;
+            margin-top: 1.5rem;
+        }
+
+        .rank-item {
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.8rem;
+            background: rgba(25, 25, 25, 0.8);
+            border-left: 3px solid var(--accent-red);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .rank-item:hover {
+            background: rgba(35, 35, 35, 0.9);
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(201, 22, 22, 0.2);
+        }
+
+        .rank-level {
+            font-weight: 600;
+            color: var(--accent-red);
+            min-width: 70px;
+            margin-right: 1rem;
+        }
+
+        .rank-name {
+            font-weight: 500;
+            margin-right: 1rem;
+        }
+
+        .rank-desc {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .rank-category {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--accent-red);
+            border-bottom: 1px solid rgba(201, 22, 22, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(201, 22, 22, 0.2);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInBlur {
+            0% {
+                opacity: 0;
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-container {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .content-section {
+                padding: 3rem 1rem;
+            }
+            
+            .rank-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .rank-level, .rank-name {
+                margin-bottom: 0.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="smoke-bg"></div>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="#info" class="nav-item">Informationen</a>
+            <a href="#motivation" class="nav-item">Warum Leader</a>
+            <a href="#suggestions" class="nav-item">Rollenspiel-Vorschläge</a>
+            <a href="#qualities" class="nav-item">Meine Stärken</a>
+            <a href="#concept" class="nav-item">Organisationskonzept</a>
+            <a href="#closing" class="nav-item">Schlusswort</a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <h1>Blood Street Gang</h1>
+        <p>Bewerbung als Leader - Rheiner Easy</p>
+        <button class="scroll-btn" onclick="scrollToSection('info')">Bewerbung lesen</button>
+    </section>
+    
+    <section id="info" class="content-section">
+        <h2 class="section-title">Informationen</h2>
+        <div class="content-box">
+            <h3>OOC-Teil</h3>
+            <p>Name: Luis</p>
+            <p>Alter: 16</p>
+            <p>Discord Name: Rheiner_Easy</p>
+        </div>
+        <div class="content-box">
+            <h3>IC-Teil</h3>
+            <p>Name: Rheiner Easyy</p>
+            <p>ID: 289086</p>
+            <p>Visum: 25</p>
+        </div>
+    </section>
+    
+    <section id="motivation" class="content-section">
+        <h2 class="section-title">Warum ich Leader der Blood Street Gang werden will</h2>
+        <div class="content-box">
+            <p>Ich bin der Meinung, dass ich eine Organisation leiten kann. Ich habe gute und genug Erfahrung gesammelt, um eine komplette Organisation zu führen. All die Erfahrungen haben mir gezeigt, wie wichtig Struktur, Aktivität und Teamarbeit sind.</p>
+            <p>Deshalb bin ich mir sicher, dass ich bereit dafür bin, die Rolle als Leader zu übernehmen und die Blood Street Gang nach vorne zu bringen.</p>
+        </div>
+    </section>
+    
+    <section id="suggestions" class="content-section">
+        <h2 class="section-title">Vorschläge für besseres Rollenspiel in meiner Organisation</h2>
+        <div class="content-box">
+            <ul>
+                <li><strong>Zinks auf den Highways & im Ghetto:</strong> Regelmäßig Zink-Aktionen fahren, damit man sieht, wir sind aktiv.</li>
+                <li><strong>Bei allen möglichen Events mitmachen:</strong> Egal ob Fort Zancudo, Clandestine oder Battleship – Hauptsache dabei sein und was holen.</li>
+                <li><strong>Verlosungen nach Event-Gewinnen:</strong> Wenn wir Events gewinnen, direkt was zurückgeben an die Mitglieder – Verlosung oder kleine Belohnungen.</li>
+                <li><strong>Ammu & Shops regelmäßig ziehen:</strong> Nicht nur fürs Geld, sondern auch für die Action – gehört einfach dazu.</li>
+                <li><strong>Interne Orga-Events starten:</strong> Damit die Leute motiviert bleiben – z.B. Sniper vs Gokart, Hide & Seek oder andere Aktionen.</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section id="qualities" class="content-section">
+        <h2 class="section-title">Was zeichnet mich als Leader aus</h2>
+        <div class="content-box">
+            <p>Ich habe über die Zeit viel Erfahrung gesammelt und war lange aktiv im Crime-Bereich. In der Zeit habe ich einiges mitgenommen und verstanden, wie eine Organisation laufen muss. Unter verschiedenen Gangs konnte ich viel lernen – vor allem, wie man Sachen ordentlich regelt und eine Struktur reinbringt.</p>
+            <p>Jetzt will ich den nächsten Schritt gehen. Ich bin überzeugt, dass ich das Zeug dazu habe, die Blood Street Gang zu führen. Ich will mich beweisen und Verantwortung übernehmen.</p>
+        </div>
+    </section>
+    
+    <section id="concept" class="content-section">
+        <h2 class="section-title">Konzept der Organisation</h2>
+        <div class="content-box">
+            <h3>Rangstruktur der Blood Street Gang</h3>
+            
+            <div class="rank-category">Leaderschaft</div>
+            <ul class="rank-list">
+                <li class="rank-item">
+                    <span class="rank-level">[12]</span>
+                    <span class="rank-name">O.G.</span>
+                    <span class="rank-desc">Leader der Organisation</span>
+                </li>
+                <li class="rank-item">
+                    <span class="rank-level">[11]</span>
+                    <span class="rank-name">Vize O.G</span>
+                    <span class="rank-desc">Vize-Leader</span>
+                </li>
+                <li class="rank-item">
+                    <span class="rank-level">[10]</span>
+                    <span class="rank-name">Big O.G</span>
+                    <span class="rank-desc">organisatorische Unterstützung</span>
+                </li>
+            </ul>
+            
+            <div class="rank-category">Turfer & Ausbilder</div>
+            <ul class="rank-list">
+                <li class="rank-item">
+                    <span class="rank-level">[9]</span>
+                    <span class="rank-name">lil O.G</span>
+                    <span class="rank-desc">Verantwortlich für die Ausbildung und Schulung neuer Member</span>
+                </li>
+                <li class="rank-item">
+                    <span class="rank-level">[8]</span>
+                    <span class="rank-name">Turf Captain</span>
+                    <span class="rank-desc">Zuständig für Turf-Bereich</span>
+                </li>
+                <li class="rank-item">
+                    <span class="rank-level">[7]</span>
+                    <span class="rank-name">Turf Shooter</span>
+                    <span class="rank-desc">Aktiver Kämpfer im Turf-Bereich</span>
+                </li>
+            </ul>
+            
+            <div class="rank-category">Mitglieder</div>
+            <ul class="rank-list">
+                <li class="rank-item">
+                    <span class="rank-level">[6]</span>
+                    <span class="rank-name">True Blood</span>
+                    <span class="rank-desc">Vollwertiges Mitglied, bei Aktionen an vorderster Front</span>
+                </li>
+                <li class="rank-item">
+                    <span class="rank-level">[5]</span>
+                    <span class="rank-name">Big Blood</span>
+                    <span class="rank-desc">Zuverlässiges, aktives Mitglied mit Pflichten im Alltag</span>
+                </li>
+                <li class="rank-item">
+                    <span class="rank-level">[4]</span>
+                    <span class="rank-name">Runner</span>
+                    <span class="rank-desc">Zuständig fürs Sprayen und Markieren der Hood</span>
+                </li>
+            </ul>
+            
+            <div class="rank-category">Neue & Strafränge</div>
+            <ul class="rank-list">
+                <li class="rank-item">
+                    <span class="rank-level">[3]</span>
+                    <span class="rank-name">Young G</span>
+                    <span class="rank-desc">Muss sich noch beweisen, zeigt Potenzial</span>
+                </li>
+                <li class="rank-item">
+                    <span class="rank-level">[2]</span>
+                    <span class="rank-name">Fresh Blood</span>
+                    <span class="rank-desc">Frisch dabei, steht unter Beobachtung</span>
+                </li>
+                <li class="rank-item">
+                    <span class="rank-level">[1]</span>
+                    <span class="rank-name">Snitch</span>
+                    <span class="rank-desc">Strafrang / hat intern verkackt</span>
+                </li>
+            </ul>
+        </div>
+        <div class="content-box">
+            <h3>Beitrittskriterien</h3>
+            <ul>
+                <li>Visumstufe 5</li>
+                <li>Alter & Geistige Reife von 16 Jahren</li>
+                <li>Aktivität</li>
+                <li>Zustimmung und Wissen des Regelwerks</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section id="closing" class="content-section">
+        <h2 class="section-title">Schlusswort</h2>
+        <div class="content-box">
+            <p>Vielen Dank fürs Durchlesen meiner Bewerbung. Ich hoffe, dass ich die Möglichkeit bekomme, mein Konzept auch persönlich vorzustellen.</p>
+            <p style="margin-top: 1.5rem;"><strong>Mit freundlichen Grüßen<br>Rheiner Easyy</strong></p>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Blood Street Gang - Bewerbung als Leader</p>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Scroll to section function
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
